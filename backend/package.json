@@ -19,6 +19,7 @@
     "dotenv": "^16.5.0",
     "env": "^0.0.2",
     "express": "^4.18.2",
+    "mern-notepad": "file:..",
     "mongoose": "^7.8.7"
   },
   "devDependencies": {
