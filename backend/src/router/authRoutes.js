@@ -114,7 +114,8 @@ router.post("/forgot", async (req, res) => {
   if (!user) return res.status(404).json({ error: "User not found" });
 
   const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: "15m" });
-  const resetLink = `http://localhost:5173/reset/${token}`;
+  const baseUrl = req.headers.origin || "http://localhost:5173";
+  const resetLink = `${baseUrl}/reset/${token}`;
   await sendResetEmail(user.email, resetLink);
 
   res.json({ message: "Reset link sent to your email" });
