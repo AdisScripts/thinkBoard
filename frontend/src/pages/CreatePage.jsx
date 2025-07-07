@@ -26,7 +26,7 @@ const CreatePage = () => {
       content
     })
     toast.success("Note created successfully!!!");
-    navigate("/")
+    navigate("/",{ replace: true })
     }catch (error) {
       console.error("Error creating note:", error);
       if(error.response.status==429){

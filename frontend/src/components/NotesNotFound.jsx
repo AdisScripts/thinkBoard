@@ -1,5 +1,5 @@
 import { NotebookIcon } from "lucide-react";
-import { Link } from "react-router"; // ✅ Corrected import from react-router to react-router-dom
+import { Link } from "react-router"; // Corrected import from react-router to react-router-dom
 
 const NotesNotFound = () => {
   return (

@@ -1,4 +1,5 @@
 import express from "express";
+import authRoutes from "./router/authRoutes.js";
 import notesRoutes from "./router/notesRoutes.js";
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
@@ -30,6 +31,7 @@ app.use(rateLimiter);// Apply rate limiting middleware
 //     console.log(`Request Method: ${req.method}, Request URL: ${req.url}`);
 //     next();
 // });
+app.use("/api/auth", authRoutes);
 
 app.use("/api/notes",notesRoutes);
 

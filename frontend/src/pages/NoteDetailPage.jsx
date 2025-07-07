@@ -1,6 +1,6 @@
 import { useState, useEffect, use } from 'react'
 import toast from 'react-hot-toast';
-import { useParams, useNavigate } from 'react-router';
+import { useParams, useNavigate } from 'react-router-dom';
 import api from '../lib/axios'; // Adjust the import path as necessary
 import { LoaderIcon } from 'lucide-react';
 import { Link } from 'react-router'
@@ -38,7 +38,7 @@ const NoteDetailPage = () => {
      try{
         await api.delete(`/notes/${id}`);
         toast.success("Note Deleted");
-        navigate("/")
+        navigate("/",{ replace: true })
      }catch(error){
        console.log("Error deleting the note:",error)
        toast.error("Failed to delete note")
@@ -54,7 +54,7 @@ const NoteDetailPage = () => {
      try{
       await api.put(`/notes/${id}`,note)
       toast.success("Note updated successfully")
-      navigate("/");
+      navigate("/",{ replace: true });
      }catch(error){
       console.log("Error saving the note: ",error)
       toast.error("Failed to update note")
@@ -63,6 +63,7 @@ const NoteDetailPage = () => {
       setSaving(false)
      }
  }
+ 
 if(loading){
   return (
     <div className='min-h-screen bg-base-200 flex items-center justify-center'>
@@ -75,10 +76,14 @@ return (
     <div className="container mx-auto px-4 py-8">
       <div className="max-w-2xl mx-auto">
       <div className="flex items-center justify-between mb-6">
-        <Link to="/" className="btn btn-ghost">
+        <button
+         className="btn btn-ghost"
+          onClick={() => navigate("/", { replace: true })}
+          >
           <ArrowLeftIcon className="h-5 w-5" />
-          Back to Notes
-        </Link>
+            Back to Notes
+          </button>
+
         <button onClick={handleDelete} className="btn btn-error btn-outline">
           <Trash2Icon className="h-5 w-5" />
           Delete Note
@@ -109,6 +114,20 @@ return (
                value={note.content}
                 onChange={(e) => setNote({ ...note, content: e.target.value })}
                  />
+                 <div className="form-control mt-4">
+                  <label className="cursor-pointer label justify-start gap-2">
+                  <input
+                    type="checkbox"
+                    className="checkbox checkbox-primary"
+                    checked={note.isPinned || false}
+                    onChange={(e) =>
+                    setNote((prev) => ({ ...prev, isPinned: e.target.checked }))
+                    }
+                    />
+                   <span className="label-text">Pin comment</span>
+                   </label>
+                    </div>
+
             </div>
 
             <div className='card-actions justify-end'>
